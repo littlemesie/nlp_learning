@@ -1,0 +1,423 @@
+aape	eng	B-brand
+上衣	n	P-product
+
+aape	eng	B-brand
+包	v	P-product
+
+aape	eng	B-brand
+女	b	S-sex
+
+aape	eng	B-brand
+帽子	n	P-product
+
+aape	eng	B-brand
+无袖	n	ST-style
+
+aape	eng	B-brand
+猿人头	n	B-brand
+
+aape	eng	B-brand
+男	n	S-sex
+
+aape	eng	B-brand
+男包	n	P-product
+
+aape	eng	B-brand
+男装	n	P-product
+牛仔	nr	P-product
+短裤	n	P-product
+
+aape	eng	B-brand
+短袖	b	ST-style
+
+aape	eng	B-brand
+短裤	n	P-product
+
+aape	eng	B-brand
+背心	n	P-product
+
+aape	eng	B-brand
+衣服	n	P-product
+
+aape	eng	B-brand
+裤子	n	P-product
+
+aape	eng	B-brand
+迷彩	a	ST-style
+
+aape	eng	B-brand
+迷彩	a	ST-style
+背心	n	P-product
+
+aape	eng	B-brand
+鞋	n	P-product
+
+aape	eng	B-brand
+鲨鱼	n	ST-style
+
+aape	eng	B-brand
+水	n	P-product
+
+aape	eng	B-brand
+清洁	a	E-effect
+面膜	n	P-product
+
+aape	eng	B-brand
+玫瑰花	n	ST-style
+水	n	P-product
+
+aape	eng	B-brand
+面霜	n	P-product
+
+abercrombiefitch	eng	B-brand
+女	b	S-sex
+
+abercrombiefitch	eng	B-brand
+短袖	b	ST-style
+
+abybom	eng	B-brand
+卸妆	v	E-effect
+膏	n	P-product
+
+abybom	eng	B-brand
+桃花	n	ST-style
+面膜	n	P-product
+
+abybom	eng	B-brand
+面膜	n	P-product
+
+angelababy	eng	ST-style
+婚戒	n	P-product
+
+angelababy	eng	ST-style
+鞋	n	P-product
+
+acne	eng	B-brand
+凉鞋	n	P-product
+
+acne	eng	B-brand
+卫衣	n	P-product
+
+acne	eng	B-brand
+卫衣	n	P-product
+女	b	S-sex
+
+acne	eng	B-brand
+围巾	n	P-product
+
+acne	eng	B-brand
+夹克	n	P-product
+
+acne	eng	B-brand
+女鞋	n	P-product
+
+acne	eng	B-brand
+帽子	n	P-product
+
+acne	eng	B-brand
+拖鞋	n	P-product
+
+acne	eng	B-brand
+毛衣	n	P-product
+
+acne	eng	B-brand
+牛仔	nr	P-product
+外套	n	P-product
+
+acne	eng	B-brand
+牛仔裤	n	P-product
+
+acne	eng	B-brand
+短款	b	ST-style
+衬衫	n	P-product
+
+acne	eng	B-brand
+短袖	b	ST-style
+
+acne	eng	B-brand
+笑脸	n	ST-style
+
+acne	eng	B-brand
+衬衣	n	P-product
+
+acne	eng	B-brand
+衬衫	n	P-product
+
+acne	eng	B-brand
+裤子	n	P-product
+
+acne	eng	B-brand
+连衣裙	nr	P-product
+
+acne	eng	B-brand
+长袖	n	ST-style
+
+acne	eng	B-brand
+长裤	n	P-product
+
+acne	eng	B-brand
+靴	n	P-product
+
+acne	eng	B-brand
+鞋	n	P-product
+
+acne	eng	B-brand
+风衣	n	P-product
+
+ac	eng	B-brand
+米兰	ns	L-location
+球衣	n	P-product
+
+addiction	eng	B-brand
+粉底液	n	P-product
+
+adidas	eng	B-brand
+情侣	n	S-sex
+
+adidas	eng	B-brand
+拖鞋	n	P-product
+
+adidas	eng	B-brand
+球鞋	n	P-product
+
+adidas	eng	B-brand
+男鞋	n	P-product
+
+adidas	eng	B-brand
+凉鞋	n	P-product
+
+adidas	eng	B-brand
+套装	n	ST-style
+女	b	S-sex
+
+adidas	eng	B-brand
+三叶草	n	ST-style
+
+adidas	eng	B-brand
+三叶草	n	ST-style
+短袖	b	ST-style
+
+adidas	eng	B-brand
+三叶草	n	ST-style
+衣服	n	P-product
+
+adidas	eng	B-brand
+书包	n	ST-style
+
+adidas	eng	B-brand
+亮绿	z	ST-style
+
+adidas	eng	B-brand
+休闲裤	n	P-product
+
+adidas	eng	B-brand
+侵略者	n	ST-style
+
+adidas	eng	B-brand
+儿童	n	S-sex
+
+adidas	eng	B-brand
+儿童	n	S-sex
+背包	n	P-product
+
+adidas	eng	B-brand
+包	v	P-product
+
+adidas	eng	B-brand
+包包	v	P-product
+
+adidas	eng	B-brand
+卫衣	n	P-product
+
+adidas	eng	B-brand
+双肩包	nr	P-product
+
+adidas	eng	B-brand
+史密斯	nr	B-brand
+
+adidas	eng	B-brand
+外套	n	P-product
+女	b	S-sex
+
+adidas	eng	B-brand
+夜光	n	ST-style
+
+adidas	eng	B-brand
+夜光	n	ST-style
+跑鞋	n	P-product
+
+adidas	eng	B-brand
+夜光	n	ST-style
+鞋	n	P-product
+
+adidas	eng	B-brand
+套装	n	ST-style
+
+adidas	eng	B-brand
+女	b	S-sex
+
+adidas	eng	B-brand
+女	b	S-sex
+凉鞋	n	P-product
+
+adidas	eng	B-brand
+女包	n	P-product
+
+adidas	eng	B-brand
+女	b	S-sex
+短裤	n	P-product
+
+adidas	eng	B-brand
+女装	n	P-product
+
+adidas	eng	B-brand
+女鞋	n	P-product
+
+adidas	eng	B-brand
+女鞋	n	P-product
+新款	n	ST-style
+
+adidas	eng	B-brand
+小白鞋	a	P-product
+
+adidas	eng	B-brand
+帆布鞋	n	P-product
+
+adidas	eng	B-brand
+帆布鞋	n	P-product
+女	b	S-sex
+
+adidas	eng	B-brand
+慢跑鞋	n	P-product
+
+adidas	eng	B-brand
+手表	n	P-product
+
+adidas	eng	B-brand
+拖鞋	n	P-product
+女	b	S-sex
+
+adidas	eng	B-brand
+拖鞋	n	P-product
+男	n	S-sex
+
+adidas	eng	B-brand
+旅行包	n	P-product
+
+adidas	eng	B-brand
+无袖	n	ST-style
+
+adidas	eng	B-brand
+板鞋	n	P-product
+
+adidas	eng	B-brand
+球衣	n	P-product
+
+adidas	eng	B-brand
+短袖	b	ST-style
+
+adidas	eng	B-brand
+短裤	n	P-product
+
+adidas	eng	B-brand
+短裤	n	P-product
+女	b	S-sex
+
+adidas	eng	B-brand
+背包	n	P-product
+
+adidas	eng	B-brand
+背心	n	P-product
+
+adidas	eng	B-brand
+衣服	n	P-product
+
+adidas	eng	B-brand
+袜子	n	P-product
+
+adidas	eng	B-brand
+袜子	n	P-product
+鞋	n	P-product
+
+adidas	eng	B-brand
+裤子	n	P-product
+
+adidas	eng	B-brand
+跑鞋	n	P-product
+
+adidas	eng	B-brand
+运动	vn	ST-style
+上衣	n	P-product
+
+adidas	eng	B-brand
+运动套装	n	P-product
+
+adidas	eng	B-brand
+运动服	n	P-product
+
+adidas	eng	B-brand
+运动裤	n	P-product
+
+adidas	eng	B-brand
+运动裤	n	P-product
+女	b	S-sex
+
+adidas	eng	B-brand
+运动鞋	n	P-product
+
+adidas	eng	B-brand
+连帽衫	nr	P-product
+
+adidas	eng	B-brand
+连衣裙	nr	P-product
+
+adidas	eng	B-brand
+镭射	b	ST-style
+
+adidas	eng	B-brand
+鞋	n	P-product
+
+adidas	eng	B-brand
+魔术贴	n	P-product
+
+adidas	eng	B-brand
+鹿晗	nr	ST-style
+
+adidas	eng	B-brand
+黑武士	nr	ST-style
+
+adidas	eng	B-brand
+黑武士	nr	ST-style
+女	b	S-sex
+
+adidas	eng	B-brand
+玻尿酸	n	M-material
+
+aerogard	eng	B-brand
+驱蚊	n	E-effect
+水	n	P-product
+
+aesop	eng	B-brand
+唇膏	nz	P-product
+
+aesop	eng	B-brand
+护手霜	nz	P-product
+
+aesop	eng	B-brand
+无油	n	M-material
+
+aesop	eng	B-brand
+洋甘菊	n	M-material
+
+aesop	eng	B-brand
+洗发水	nz	P-product
+
+aesop	eng	B-brand
+面膜	n	P-product
+
+aesop	eng	B-brand
+面霜	n	P-product
+
+aey	eng	B-brand
+面膜	n	P-product
+
