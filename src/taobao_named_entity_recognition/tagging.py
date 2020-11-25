@@ -87,6 +87,8 @@ def tagging():
 
                 nominal = next(seg).flag
                 tag = ""
+                if color_dict.get(term, None):
+                    tag = "C-color"
                 if product_dict.get(term, None):
                     tag = "P-product"
                 elif brand_dict.get(term, None):

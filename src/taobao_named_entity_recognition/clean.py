@@ -3,7 +3,6 @@ import sys
 sys.path.append("../")
 import re
 import jieba
-import jieba.posseg as pseg
 #数据清洗，得到较为规整的query
 
 s_list = []
@@ -29,9 +28,11 @@ def clean():
             #清除过短的query
             if len(line) <= 2:
                 continue
+
             #清除爬虫爬宝贝id的query
             if re.match('[0-9]{18}', line) != None:
                 continue
+
             #过滤全是英文的query
             eng_flag = True
             for i in line:
@@ -40,6 +41,7 @@ def clean():
                     break
             if eng_flag == True:
                 continue
+
             #重新分词
             ll = jieba.cut(line)
             line = []
@@ -47,6 +49,7 @@ def clean():
                 if i == u"\u2006" or i == u" " or i == " ":
                     continue
                 line.append(i)
+
             #同义词替换，简写替换
             for i in range(len(line)):
                 if synonym_dict.get(line[i], None):
@@ -55,11 +58,14 @@ def clean():
             #过滤重复query
             if line in s_list:
                 continue
+
             l = ",".join(line)
             s_list.append(line)
             output.write(l + "\n")
+
     output.close()
     return
+
 def main():
     load_synonym_dict()
     clean()
