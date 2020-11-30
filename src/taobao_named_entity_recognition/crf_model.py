@@ -118,6 +118,6 @@ if __name__ == '__main__':
     crf_bash = "crf_test -m model {} ".format(filename)
     process = subprocess.Popen(crf_bash.split(), stdout=subprocess.PIPE)
     output = process.communicate()[0]
-    # for o in output.decode(encoding='utf-8'):
-    #     print(o)
-    print(output.decode(encoding='utf-8'))
+    for o in output.decode(encoding='utf-8'):
+        print(o)
+    # print(output.decode(encoding='utf-8'))
