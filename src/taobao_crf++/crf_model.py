@@ -90,12 +90,12 @@ class CRFModel(object):
 
 if __name__ == '__main__':
     """"""
-    # crf_model = CRFModel(model='model')
+    # crf_model = CRFModel(models='models')
     # a = '龙骧短柄翻盖旅行包'
     # data = crf_model.crf_test(tag_data=a)
     # print(data)
     # word_str = jieba.cut("龙骧短柄翻盖旅行包", cut_all=False)
-    # tagger = CRFPP.Tagger("-m model -v 3 -n2")
+    # tagger = CRFPP.Tagger("-m models -v 3 -n2")
     # tagger.clear()
     # for w in word_str:
     #     print(w)
@@ -115,7 +115,7 @@ if __name__ == '__main__':
     # print("token size: ", tagger.size())
     # print("tag size: ", tagger.ysize())
     filename = 'crf_test.data'
-    crf_bash = "crf_test -m model {} ".format(filename)
+    crf_bash = "crf_test -m models {} ".format(filename)
     process = subprocess.Popen(crf_bash.split(), stdout=subprocess.PIPE)
     output = process.communicate()[0]
     for o in output.decode(encoding='utf-8'):
