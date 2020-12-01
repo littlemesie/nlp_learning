@@ -2,17 +2,17 @@ from os.path import join
 from codecs import open
 
 
-def build_corpus(split, make_vocab=True, data_dir="./ResumeNER"):
+def build_corpus(make_vocab=True, data_path=""):
     """读取数据"""
-    assert split in ['train', 'dev', 'test']
-
     word_lists = []
     tag_lists = []
-    with open(join(data_dir, split+".char.bmes"), 'r', encoding='utf-8') as f:
+    with open(data_path, 'r', encoding='utf-8') as f:
         word_list = []
         tag_list = []
         for line in f:
             if line != '\n':
+                # print(line)
+                # word, tag = line.strip('\n').split()
                 word, tag = line.strip('\n').split()
                 word_list.append(word)
                 tag_list.append(tag)
