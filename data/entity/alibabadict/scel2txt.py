@@ -108,11 +108,18 @@ def scel2txt(file_name):
 if __name__ == '__main__':
 
     # scel所在文件夹路径
-    file_path = "化妆品品牌大全.scel"
+    file_path = "水果名大全.scel"
     scel2txt(file_path)
+    file_path = "147种水果的名字.scel"
+    scel2txt(file_path)
+    fruit_dict = set()
+    # f = open('./fruit_dict.txt', 'w')
 
-    # f = open('./Scel/coal_dict.txt', 'w')
     for count, py, word in GTable:
-        print(count, py, word)
+        fruit_dict.add(word)
+        # print(count, py, word)
     #     f.write(str(count) + '\t\t\t' + py + '\t\t\t' + word + '\n')
     # f.close()
+
+    for fruit in fruit_dict:
+        print(fruit)
