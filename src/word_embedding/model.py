@@ -35,6 +35,6 @@ if __name__ == '__main__':
     # 测试
     model = gensim.models.Word2Vec.load(model_path)
 
-    result = model.wv.similar_by_word(word='番茄', topn=10)
+    result = model.wv.similar_by_word(word='富士', topn=10)
     print(result)
 
