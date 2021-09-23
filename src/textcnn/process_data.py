@@ -78,5 +78,8 @@ def get_text_idx(text, vocab, max_document_length):
     return text_array
 
 if __name__ == "__main__":
-    x_text, y = load_data_and_labels('../../data/text_cnn/cutclean_label_corpus10000.txt')
-    print(y)
+    # x_text, y = load_data_and_labels('../../data/text_cnn/cutclean_label_corpus10000.txt')
+    # print(x_text)
+    ww = w2v_wrapper("../../data/text_cnn/vectors.bin")
+    w2v_model = ww.model
+    print(w2v_model.vocab_hash)

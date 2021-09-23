@@ -9,6 +9,9 @@
 import os
 import random
 import pandas as pd
+import pkuseg
+from utils.util import load_stopwords
+from utils.util import save_pickle
 base_path = '/data/python/data/THUCNews'
 
 def generate_map_file():
@@ -39,4 +42,40 @@ def generate_map_file():
     print(train_df)
     print(test_df)
 
+def cut_text(file, out_file, train=True):
+    """分词"""
+    seg = pkuseg.pkuseg()
+    stopwords = load_stopwords()
+    out_data = open(f"{base_path}/{out_file}", "w")
+    df = pd.read_csv(f"{base_path}/{file}")
+
+    count = 100000 if train else 10000
+    i = 0
+    vocabs = set()
+    for index, row in df.iterrows():
+        print(i)
+        with open(row['path'], 'r') as fr:
+            text = fr.read()
+        text = str(text.encode("utf-8"), 'utf-8')
+        seg_text = seg.cut(text.replace("\t", " ").replace("\n", " "))
+        seg_t = []
+        for st in seg_text:
+            if st not in stopwords:
+                seg_t.append(st)
+                vocabs.add(st)
+        outline = " ".join(seg_t)
+        outline = str(row['label']) + '\t' + outline + "\n"
+
+        out_data.write(outline)
+        out_data.flush()
+        i += 1
+        if i > count:
+            break
+    out_data.close()
+    if train:
+        vocabs = dict(zip(vocabs, range(len(vocabs))))
+        save_pickle(vocabs, 'vocabs')
+
 # generate_map_file()
+
+cut_text('train.csv', 'train_1.txt', train=True)
