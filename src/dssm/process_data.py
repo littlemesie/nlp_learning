@@ -8,6 +8,9 @@
 """
 import json
 import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from utils.util import load_vocab
 
 path = '/data/python/data'
 
@@ -41,14 +44,6 @@ def preprocess_data():
     clounms = ['keyword', 'doc', 'label']
     data_df[clounms].to_csv(f"{path}/preprocess_train_100000.csv",  index=False)
 
-def load_vocab():
-    """加载vocab数据"""
-    word_dict = {}
-    with open("../../data/dssm/vocab.txt", encoding='utf8') as f:
-        for idx, word in enumerate(f.readlines()):
-            word = word.strip()
-            word_dict[word] = idx
-    return word_dict
 
 def process_keyword(x, word_dict, key_len):
     """处理keyword"""
@@ -67,24 +62,23 @@ def process_doc(x, word_dict, doc_len):
     xx = [word_dict[w] if w in word_dict else 0 for w in words]
     return xx
 
-def get_feature():
+def get_feature(key_len=4, doc_len=10):
     """特征工程"""
-    key_len = 4
-    doc_len = 10
     word_dict = load_vocab()
     df = pd.read_csv(f"{path}/preprocess_train_100000.csv")
     df['keyword_index'] = df['keyword'].apply(lambda x: process_keyword(x, word_dict, key_len))
     df['doc_index'] = df['doc'].apply(lambda x: process_doc(x, word_dict, doc_len))
-    keyword_map_index = {}
-    doc_map_index = {}
-    for index, row in df[['keyword', 'doc']].iterrows():
+    train_data, test_data = train_test_split(df, test_size=0.2)
 
-        print(index)
-        print(row)
-        break
-    print(df)
+    train_X = [train_data['keyword_index'].values, train_data['doc_index'].values]
+    train_y = train_data['label'].values.astype('int32')
+
+    test_X = [test_data['keyword_index'].values, test_data['doc_index'].values]
+    test_y = test_data['label'].values.astype('int32')
+    return word_dict, train_X, train_y, test_X, test_y
 
 # preprocess_data()
 # word_dict = load_vocab()
 # print(word_dict)
-get_feature()
+# word_dict, train_X, train_y, test_X, test_y = get_feature()
+
