@@ -9,6 +9,9 @@
 import tensorflow as tf
 from tensorflow.keras import Sequential
 from tensorflow.keras.layers import Layer, Dense, Dropout
+from tensorflow.keras.initializers import RandomNormal
+from tensorflow.keras.initializers import Zeros
+
 
 class DNN(Layer):
     """DNN Layer"""
@@ -129,6 +132,42 @@ class MultiHeadAttention(Layer):
         output = self.dense(concat_attention)  # (batch_size, seq_len_q, d_model)
         return output
 
+class SampledSoftmaxLayer(Layer):
+    """Sampled Softmax Layer"""
+    def __init__(self, num_sampled=5, **kwargs):
+        super(SampledSoftmaxLayer, self).__init__(**kwargs)
+        self.num_sampled = num_sampled
+
+    def build(self, input_shape):
+        self.size = input_shape[0][0]
+
+        self.zero_bias = self.add_weight(shape=[self.size],
+                                         initializer=Zeros,
+                                         dtype=tf.float32,
+                                         trainable=False,
+                                         name="bias")
+        super(SampledSoftmaxLayer, self).build(input_shape)
+
+    def call(self, inputs_with_label_idx, training=None, **kwargs):
+        """
+        The first input should be the model as it were, and the second the
+        target (i.e., a repeat of the training data) to compute the labels
+        argument
+        """
+        softmax_weights, embed, label_idx = inputs_with_label_idx
+        print(softmax_weights, embed, label_idx)
+        # embed = tf.squeeze(embed, axis=1)  # (None, len)
+        # label_idx = tf.squeeze(label_idx, axis=1)  # (None, len)
+        print(self.zero_bias)
+        loss = tf.nn.sampled_softmax_loss(weights=softmax_weights,
+                                          biases=self.zero_bias,
+                                          labels=label_idx,
+                                          inputs=embed,
+                                          num_sampled=self.num_sampled,
+                                          num_classes=self.size,
+                                          )
+        return loss
+        # return tf.expand_dims(loss, axis=1)
 
 if __name__=='__main__':
     x = tf.ones((2, 5, 10))
