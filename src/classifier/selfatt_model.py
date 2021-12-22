@@ -3,23 +3,24 @@
 """
 @ide: PyCharm
 @author: mesie
-@date: 2021/10/28 上午11:13
-@summary: Text RNN 模型
+@date: 2021/10/28 下午2:59
+@summary: Text BIRNN 加入attention
 """
 import tensorflow as tf
 import matplotlib.pyplot as plt
 from tensorflow.keras import Input, Model
-from tensorflow.keras.layers import Embedding, Dense, Dropout, LSTM
+from tensorflow.keras.layers import Embedding, Dense, Bidirectional, LSTM, GRU
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.losses import SparseCategoricalCrossentropy
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from layers.modules import Fully
+from layers.modules import MultiHeadAttention
 
 
-class TextRNN(Model):
+class SelfAtt(Model):
     def __init__(self, maxlen, max_features, embedding_dims, class_num=5, dense_size=None,
                 last_activation='softmax', **kwargs):
-        super(TextRNN, self).__init__(**kwargs)
+        super(SelfAtt, self).__init__(**kwargs)
         """
         :param maxlen: 文本最大长度
         :param max_features: 词典大小
@@ -37,18 +38,23 @@ class TextRNN(Model):
 
         self.embedding = Embedding(input_dim=self.max_features, output_dim=self.embedding_dims,
                                    input_length=self.maxlen)
-        self.rnn = LSTM(128)
+        self.attention = MultiHeadAttention(d_model=embedding_dims, num_heads=4)
+        self.bi_rnn = Bidirectional(layer=GRU(units=128, activation='tanh', return_sequences=True), merge_mode='ave') # LSTM or GRU
         if self.dense_size is not None:
             self.ffn = Fully(self.dense_size)
         self.classifier = Dense(self.class_num, activation=self.last_activation)
 
     def call(self, inputs, training=None, mask=None):
         if len(inputs.get_shape()) != 2:
-            raise ValueError('The rank of inputs of TextRNN must be 2, but now is %d' % len(inputs.get_shape()))
+            raise ValueError('The rank of inputs of TextSelfAtt must be 2, but now is %d' % len(inputs.get_shape()))
         if inputs.get_shape()[1] != self.maxlen:
-            raise ValueError('The maxlen of inputs of TextRNN must be %d, but now is %d' % (self.maxlen, inputs.get_shape()[1]))
+            raise ValueError(
+                'The maxlen of inputs of TextSelfAtt must be %d, but now is %d' % (self.maxlen, inputs.get_shape()[1]))
         emb = self.embedding(inputs)
-        x = self.rnn(emb)
+        x = self.attention(inputs=[emb, emb, emb])
+        x = self.bi_rnn(x)
+        x = tf.reduce_mean(x, axis=1)
+
         if self.dense_size is not None:
             x = self.ffn(x)
 
@@ -77,8 +83,8 @@ if __name__ == '__main__':
     # ============================Build Model==========================
     mirrored_strategy = tf.distribute.MirroredStrategy()
     with mirrored_strategy.scope():
-        text_rnn = TextRNN(**config)
-        model = text_rnn.build_graph()
+        text_selfatt = SelfAtt(**config)
+        model = text_selfatt.build_graph()
         model.summary()
         model.compile(optimizer=Adam(),
                      loss=SparseCategoricalCrossentropy(),

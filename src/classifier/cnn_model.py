@@ -3,68 +3,64 @@
 """
 @ide: PyCharm
 @author: mesie
-@date: 2021/10/28 下午2:29
-@summary: Text BIRNN
+@date: 2021/10/27 下午5:24
+@summary:
 """
-# -*- coding:utf-8 -*-
-
-"""
-@ide: PyCharm
-@author: mesie
-@date: 2021/10/28 上午11:13
-@summary: Text RNN 模型
-"""
-import tensorflow as tf
 import matplotlib.pyplot as plt
-from tensorflow.keras import Input, Model
-from tensorflow.keras.layers import Embedding, Dense, Bidirectional, LSTM, GRU, GlobalAveragePooling1D
+import tensorflow as tf
+from tensorflow.keras.layers import Embedding, Conv1D, Input, Dense, Concatenate, GlobalMaxPooling1D
+from tensorflow.keras import Model
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.losses import SparseCategoricalCrossentropy
 from tensorflow.keras.preprocessing.sequence import pad_sequences
-from layers.modules import Fully
 
+class CnnModel(Model):
 
-class TextBiRNN(Model):
-    def __init__(self, maxlen, max_features, embedding_dims, class_num=5, dense_size=None,
-                last_activation='softmax', **kwargs):
-        super(TextBiRNN, self).__init__(**kwargs)
+    def __init__(self,
+                 maxlen,
+                 max_features,
+                 embedding_dims,
+                 class_num,
+                 kernel_sizes=[2, 3, 5],
+                 kernel_regularizer=None,
+                 last_activation='softmax'
+                 ):
         """
         :param maxlen: 文本最大长度
         :param max_features: 词典大小
         :param embedding_dims: embedding维度大小
+        :param kernel_sizes: 滑动卷积窗口大小的list, eg: [2,3,5]
+        :param kernel_regularizer: eg: tf.keras.regularizers.l2(0.001)
         :param class_num:
-        :param dense_size: fully layer 大小
         :param last_activation:
         """
+        super(CnnModel, self).__init__()
         self.maxlen = maxlen
-        self.max_features = max_features
-        self.embedding_dims = embedding_dims
+        # self.max_features = max_features
+        # self.embedding_dims = embedding_dims
+        self.kernel_sizes = kernel_sizes
         self.class_num = class_num
-        self.dense_size = dense_size
-        self.last_activation = last_activation
-
-        self.embedding = Embedding(input_dim=self.max_features, output_dim=self.embedding_dims,
-                                   input_length=self.maxlen)
-        self.bi_rnn = Bidirectional(layer=GRU(units=128, activation='tanh', return_sequences=True), merge_mode='concat' ) # LSTM or GRU
-        if self.dense_size is not None:
-            self.ffn = Fully(self.dense_size)
-        # self.avepool = GlobalAveragePooling1D()
-        self.classifier = Dense(self.class_num, activation=self.last_activation)
+        self.embedding = Embedding(input_dim=max_features, output_dim=embedding_dims, input_length=maxlen)
+        self.conv1s = []
+        self.avgpools = []
+        for kernel_size in kernel_sizes:
+            self.conv1s.append(Conv1D(filters=128, kernel_size=kernel_size, activation='relu', kernel_regularizer=kernel_regularizer))
+            self.avgpools.append(GlobalMaxPooling1D())
+        self.classifier = Dense(class_num, activation=last_activation, )
 
     def call(self, inputs, training=None, mask=None):
         if len(inputs.get_shape()) != 2:
-            raise ValueError('The rank of inputs of TextBiRNN must be 2, but now is %d' % len(inputs.get_shape()))
+            raise ValueError('The rank of inputs of TextCNN must be 2, but now is %d' % len(inputs.get_shape()))
         if inputs.get_shape()[1] != self.maxlen:
-            raise ValueError(
-                'The maxlen of inputs of TextBiRNN must be %d, but now is %d' % (self.maxlen, inputs.get_shape()[1]))
+            raise ValueError('The maxlen of inputs of TextCNN must be %d, but now is %d' % (self.maxlen, inputs.get_shape()[1]))
+
         emb = self.embedding(inputs)
-
-        x = self.bi_rnn(emb)
-        # x = self.avepool(x)
-        x = tf.reduce_mean(x, axis=1)
-        if self.dense_size is not None:
-            x = self.ffn(x)
-
+        conv1s = []
+        for i in range(len(self.kernel_sizes)):
+            c = self.conv1s[i](emb)  # (batch_size, maxlen-kernel_size+1, filters)
+            c = self.avgpools[i](c)  # # (batch_size, filters)
+            conv1s.append(c)
+        x = Concatenate()(conv1s)  # (batch_size, len(self.kernel_sizes)*filters)
         output = self.classifier(x)
         return output
 
@@ -81,7 +77,7 @@ if __name__ == '__main__':
         "max_features": 300,
         "embedding_dims": 128,
         "class_num": 2,
-        "dense_size": [64, 32]
+        "kernel_sizes": [2, 3, 5]
     }
     # ============================Load Data==========================
     (x_train, y_train), (x_test, y_test) = tf.keras.datasets.imdb.load_data(num_words=config['max_features'])
@@ -90,8 +86,8 @@ if __name__ == '__main__':
     # ============================Build Model==========================
     mirrored_strategy = tf.distribute.MirroredStrategy()
     with mirrored_strategy.scope():
-        text_birnn = TextBiRNN(**config)
-        model = text_birnn.build_graph()
+        text_cnn = CnnModel(**config)
+        model = text_cnn.build_graph()
         model.summary()
         model.compile(optimizer=Adam(),
                      loss=SparseCategoricalCrossentropy(),
