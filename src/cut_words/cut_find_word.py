@@ -27,7 +27,7 @@ class Find_Words:
                 if t:
                     yield t
     def text_filter(self):
-        path = "/home/mesie/python/aia-nlp-service/data/alarm_classification/chengdu_jj_map_2022_12_09.csv"
+        path = ""
         df = pd.read_csv(path)
         df = df.sample(10000)
         # 预切断句子，以免得到太多无意义（不是中文、英文、数字）的字符串
